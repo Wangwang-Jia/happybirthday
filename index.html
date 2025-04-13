@@ -13,61 +13,113 @@
     <link rel="stylesheet" type="text/css" href="static/font.css"/>
 
     <title>HappyBirthday</title>
+
+    <!-- 引入 Fireworks.js 库 -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
 </head>
 <body>
     <div class="container" id="container">
-        <h1 id="head">Countdown to YOUR birthday:</h1>
+        <h1 id="head">Countdown to MeiHan Li's birthday:</h1>
         <ul>
           <li><span id="days"></span>days</li>
           <li><span id="hours"></span>Hours</li>
           <li><span id="minutes"></span>Minutes</li>
           <li><span id="seconds"></span>Seconds</li>
         </ul>
-        <div class="but" >
-                <button id="but" style="font-size: 50px" class="bttn-jelly bttn-lg bttn-royal">Happy Birthday</button>
-            </div>
-      </div>
-      <div class="container2" id="container2" >
-        <div class="balloon">
-            <div><span>☺</span>
-            </div>
-            <div><span>H</span>
-            </div>
-            <div><span>A</span>
-            </div>
-            <div><span>P</span>
-            </div>
-            <div><span>P</span>
-            </div>
-            <div><span>Y</span>
-            </div>
+        <div class="but">
+            <button id="but" style="font-size: 50px" class="bttn-jelly bttn-lg bttn-royal" disabled>Happy Birthday</button>
         </div>
-
-         
     </div>
 
-    <div class="card" id="card">
-            <div class="imgBox">
-                <div class="bark"></div>
-                <img src="生日快乐.png">
-            </div>
-            <div class="details">
-                <h4 class="color1">You're a LUCKY girl!</h4>
-                <h4 class="color2 margin">(HAPPY BIRTHDAY)</h4>
-                <p>Dear, 李美含美女！</p>
-                <p>今天是你的生日</p>
-                <p>新的一年，愿你有更多的幸福和快乐</p>
-                <p>愿你始终平安喜乐</p>
-                <p>愿你所遇每一个人都温暖善良</p>
-                <p>愿你有足够的勇气去追逐梦想</p>
-                <p>愿你永远保持初心，眼里有光</p>
-                <p class="text-right">愿你的未来比现在更精彩</p>
-                <p class="text-right">♥ dear, beautiful girl</p>
-            </div>
+    <div class="container2" id="container2" style="display:none;">
+        <div class="balloon">
+            <div><span>☺</span></div>
+            <div><span>H</span></div>
+            <div><span>A</span></div>
+            <div><span>P</span></div>
+            <div><span>P</span></div>
+            <div><span>Y</span></div>
         </div>
+    </div>
+
+    <div class="card" id="card" style="display:none;">
+        <div class="imgBox">
+            <div class="bark"></div>
+            <img src="生日快乐.png">
+        </div>
+        <div class="details">
+            <h4 class="color1">You're a LUCKY girl!</h4>
+            <h4 class="color2 margin">(HAPPY BIRTHDAY)</h4>
+            <p>Dear, 李美含美女！</p>
+            <p>今天是你的生日</p>
+            <p>新的一年，愿你有更多的幸福和快乐</p>
+            <p>愿你始终平安喜乐</p>
+            <p>愿你所遇每一个人都温暖善良</p>
+            <p>愿你有足够的勇气去追逐梦想</p>
+            <p>愿你永远保持初心，眼里有光</p>
+            <p class="text-right">愿你的未来比现在更精彩</p>
+            <p class="text-right">♥ dear, beautiful girl</p>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        const second = 1000,
+            minute = second * 60,
+            hour = minute * 60,
+            day = hour * 24;
+
+        var but = document.getElementById('but');
+        but.addEventListener("click", countFunc);
+
+        function countFunc() {
+            document.getElementById('container').style.display = 'none';
+            document.getElementById('container2').style.display = 'block';
+            document.getElementById('card').style.display = 'block';
+        }
+
+        let countDown = new Date('Apr 14, 2025 00:00:00').getTime(),
+            x = setInterval(function() {
+
+              let now = new Date().getTime(),
+                  distance = countDown - now;
+
+              // 计算并显示倒计时
+              document.getElementById('days').innerText = Math.floor(distance / (day)),
+              document.getElementById('hours').innerText = Math.floor((distance % (day)) / (hour)),
+              document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute)),
+              document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
+
+              // 当倒计时到达目标时间时
+              if (distance <= 0) {
+                  // 设置为0 0 0
+                  document.getElementById('days').innerText = '0';
+                  document.getElementById('hours').innerText = '0';
+                  document.getElementById('minutes').innerText = '0';
+                  document.getElementById('seconds').innerText = '0';
+
+                  clearInterval(x); // 清除定时器
+                  document.getElementById('but').disabled = false; // 启用按钮
+                  document.getElementById('but').textContent = "Click to Celebrate!"; // 修改按钮文本
+
+                  // 启动烟花效果
+                  startFireworks();
+              }
+
+            }, second);
+
+        function startFireworks() {
+            // 创建一个新的烟花实例，设置画布大小和颜色
+            const fireworks = new Fireworks({
+                body: document.body,  // 目标元素为 body
+                opacity: 0.8,  // 烟花的透明度
+                colors: ['#FF0000', '#00FF00', '#0000FF', '#FFFF00'],  // 设置烟花的颜色
+                speed: 3,  // 控制烟花的速度
+                particles: 100,  // 控制烟花的粒子数
+                maxWidth: 600,  // 最大宽度
+                maxHeight: 400,  // 最大高度
+            });
+            fireworks.start(); // 开始烟花特效
+        }
+    </script>
 </body>
 </html>
-<script type="text/javascript" src="static/count.js"></script>
-
-
-
