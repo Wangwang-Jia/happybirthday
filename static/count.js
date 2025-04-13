@@ -10,7 +10,7 @@ const second = 1000,
         document.getElementById('container2').style.display = 'block';
         document.getElementById('card').style.display = 'block';
     }
-    let countDown = new Date('Oct 01, 2020 00:00:00').getTime(),
+    let countDown = new Date('Apr 14, 2025 00:00:00').getTime(),
         x = setInterval(function() {
     
           let now = new Date().getTime(),
