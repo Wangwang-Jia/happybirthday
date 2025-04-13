@@ -84,8 +84,9 @@ h4 {
 }
 
 .card .imgBox img {
-	max-width: 280px;
-	max-height: 400px;
+    width: 100%;  /* 使图片的宽度填满整个盒子 */
+    height: 100%; /* 使图片的高度填满整个盒子 */
+    object-fit: cover; /* 保持图片的纵横比，同时填充容器 */
 }
 
 .card:hover .imgBox {
